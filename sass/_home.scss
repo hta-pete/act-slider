@@ -1,0 +1,613 @@
+// ———————————————————————————————————
+// HERO
+// ——————————————————————————————————— 
+.hero{
+	position:relative;
+	color:white;
+	background:$blue_dark;
+	width:100%;
+	.hero_slide{
+		position:relative;
+		&.reverse{
+			.hero-copy{
+				left:40%;
+			}
+		}
+		&.dark{
+			.hero-copy{
+				color:$blue;
+				.button-group{
+					.line-btn{
+						color:$blue;
+						border-color:$blue;
+					}
+				}
+			}
+		}
+		&.slick-active{
+			img, video{
+				@include opacity(1);
+				@include transform(scale(1));
+			}
+		}
+	}
+	.hero-copy{
+		position:absolute;
+		left:0;
+		top:50%;
+		@include transform(translateY(-50%));
+		width:60%;
+		text-align:center;
+		img{
+			display:inline-block !important;
+		}
+		.button-group{
+			margin-top:30px;
+		}
+		h1,h2,p,.button-group, img{
+			display:block;
+			will-change: transform;
+			opacity:0 !important;
+			@for $i from 1 through 10 {
+		    &:nth-child(#{$i}) {
+		    	@include transform(translateY(60px * $i));
+		    	@include transition(transform 1.4s (0.01s * $i) $easeOutExpo, opacity 1.4s (0.01s * $i) $easeOutExpo);
+		    }
+		  }
+		}
+		&.active{
+			h1,h2,p,.button-group, img{
+				opacity:1 !important;
+				@include transform(translateY(0));
+			}
+		}
+	}
+	.hero-video{
+		width:100%;
+		video, img{
+			display:block;
+			width:100%;
+			height:auto;
+			@include opacity(0);
+			@include transform(scale(1.2));
+			@include transition(transform 2s $easeOutExpo);
+		}
+	}
+}
+.scroll-cue{
+	z-index:20;
+	position:absolute;
+	bottom:5px;
+	left:50%;
+	@include transform(translate3d(-50%,0,0));
+	height:60px;
+  font-size:13px;
+  font-weight:700;
+  text-transform:uppercase;
+  @include transition(all 1s $easeOutExpo);
+  &:after{
+  	position:relative;
+  	display:block;
+  	content:"";
+  	width:1px;
+  	height:60px;
+  	margin:15px auto 0 auto;
+  	background:$orange;
+  	@include transition(all 1s 0.2s $easeOutExpo);
+  	animation: scrollCue 3s infinite;
+  }
+  &.active{
+    @include transform(translateY(-30px));
+    @include opacity(0);
+    &:after{
+      height:0;
+    }
+  }
+}
+
+.slick-dots{
+	z-index:4;
+	position:absolute;
+	bottom:20px;
+	width:100%;
+	text-align:center;
+	li{
+		display:inline-block;
+		margin:0 6px;
+		button{
+			display:block;
+			width:10px;
+			height:10px;
+			border:none;
+			border-radius:100%;
+			background:white;
+			-webkit-appearance:none;
+			padding:0;
+			font-size:0;
+			text-indent:-999px;
+			overflow:hidden;
+		}
+		&.slick-active{
+			button{
+				width:14px;
+			  height:14px;
+			  background:$orange;
+			}
+		}
+	}
+}
+
+
+@keyframes scrollCue {
+  0% {
+    @include transform(translateY(0));
+    @include opacity(1);
+  }
+  10% {
+    @include transform(translateY(30px));
+    @include opacity(0);
+  }
+  20% {
+    @include transform(translateY(-50px));
+    @include opacity(0);
+  }
+  30% {
+    @include transform(translateY(0));
+    @include opacity(1);
+  }
+  80% {
+  	@include transform(translateY(0));
+    @include opacity(1);
+  }
+}
+
+// ———————————————————————————————————
+// CAREER OPTIONS 
+// ———————————————————————————————————
+.career-options{
+	position:relative;
+	padding:70px 0 120px 0;
+	--card_width:400px;
+	--card_height:360px;
+	--card_gap:20px;
+	.map-overlay{
+		img{
+			z-index:0;
+			position:absolute;
+			top:0;
+			left:0;
+			display:block;
+			width:100%;
+			max-width:1920px;
+			height:auto;
+			@include opacity(0);
+		}
+	}
+	.card-slider .card{
+		z-index:2;
+		position:relative;
+	  width:var(--card_width);
+	  height:var(--card_height);
+	  background: linear-gradient(180deg, $blue 0%, $blue_light 150%);
+	  border-radius:10px;
+	  color:white;
+	  .card_image{
+	  	z-index:1;
+	    display:block;
+	    position:absolute;
+	    bottom:-40px;
+	    right:-10px;
+	    width:75%;
+	    height:auto;
+	    border-radius:10px;
+	    @include transform(scale(1) rotate(-8deg));
+	    @include transition(all 0.8s $easeOutExpo);
+	    will-change: transform;
+	    overflow:hidden;
+	     img{
+		  	display:block;
+		  	width:100%;
+		  	height:auto;
+		  }
+	  }
+	  &:hover{
+	  	.card_image{
+		    @include transform(translateX(10px) scale(0.85) rotate(-5deg));
+		  }
+		  .card-circle{
+			  @include transform(scaleX(1));
+			  @include opacity(1);
+			}
+	  }
+	}
+	.card-slider .card_text{
+	  z-index:2;
+	  position:absolute;
+	  top:0;
+	  left:0;
+	  width:100%;
+	  padding:50px;
+	  color:white;
+	  h4{
+	    margin-bottom:5px;
+	  }
+	}
+	.card_link{
+		z-index:2;
+		position:absolute;
+		bottom:50px;
+		left:50px;
+		.line-btn{
+			font-size:13px;
+		}
+	}
+}
+.career-options_text-block{
+	img{
+		margin:-30px 0 0 -300px;
+	}
+}
+
+
+
+// ———————————————————————————————————
+// BENEFITS
+// ———————————————————————————————————
+.benefits{
+	position:relative;
+	padding:120px 0;
+	background:$blue;
+	background-size:auto 100%;
+	background-size:auto 100%;
+	color:white;
+	.benefit{
+		padding-left:25px;
+		border-left:1px solid rgba(255,255,255,0.25);
+		&:last-child{
+			margin-bottom:0;
+		}
+		p{
+			color:rgba(255,255,255,1);
+		}
+		a{
+			font-style:italic;
+			color:white;
+			text-decoration:underline;
+			@include transition(color 0.6s $easeOutExpo);
+			&:hover{
+				color:$orange;
+			}
+		}
+		img{
+			display:block;
+			width:100%;
+			max-width:220px;
+			margin-top:5px;
+		}
+	}
+}
+.benefits-map{
+	z-index:3;
+	position:absolute;
+	top:-240px;
+	right:0;
+	width:1280px;
+	@media(min-width:1280px){
+		width:1280px;
+	}
+	@media(min-width:1920px){
+		width:1440px;
+	}
+	img{
+		display:block;
+		width:100%;
+		height:auto;
+		@include opacity(1);
+	}
+}
+.text-block--floating{
+	padding:60px;
+	background:$blue;
+	border-radius:10px;
+}
+
+// ———————————————————————————————————
+// EQUIPMENT
+// ——————————————————————————————————— 
+.equipment{
+	position:relative;
+	background:url("../img/benefits-bg.jpg") no-repeat left center;
+	background-size:auto 100%;
+	height:60vh;
+	min-height:650px;
+	.equipment_text{
+		z-index:2;
+		position:relative;
+		color:white;
+		text-align:center;
+		p{
+			margin-top:5px;
+			color:rgba(255,255,255,1);
+		}
+	}
+	.equipment_highlights{
+		margin-top:40px;
+		.column{
+			padding:0 25px;
+			border-right:1px solid rgba(255,255,255,0.3);
+			&:last-child{
+				border:none;
+			}
+		}
+	}
+	.equipment_video{
+		z-index:0;
+		position:absolute;
+		top:0;
+		right:0;
+		width:100%;
+		height:100%;
+		overflow:hidden;
+		background:#222;
+		video, img{
+			position:absolute;
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+			object-fit: cover;
+			object-position:center;
+			@include opacity(0.6);
+		}
+	}
+}
+
+// ———————————————————————————————————
+// APPLY CTA
+// ——————————————————————————————————— 
+.apply-cta{
+	margin-top:480px;
+	background:$blue url("../img/act-logo-bg.png") no-repeat center;
+	background-size:auto 170%;
+	width:100%;
+	color:white;
+	.column{
+		width:auto;
+		&:first-child{
+			margin-right:50px;
+		}
+		&:last-child{
+			margin-left:50px;
+		}
+	}
+	.cta-wrap{
+		padding:140px 0;
+		//background:linear-gradient(160deg, $blue 0%, rgba(0,0,0,0) 160%);
+	}
+	p{
+		max-width:600px;
+	}
+	.cta-links{
+		margin-top:20px;
+	}
+	a{
+		display:inline-block;
+		font-size:17px;
+	}
+	.outline-btn{
+		font-weight:800;
+		letter-spacing:-0.05em;
+	}
+	.phone-number{
+		display:block;
+		color:white;
+		font-size:17px;
+		margin-top:15px;
+		text-align:center;
+		span{
+			font-style:italic;
+		}
+	}
+}
+.apply-cta--sm{
+	background: linear-gradient(-90deg, $orange 0%, darken($orange, 15%) 100%);
+	.cta-footer{
+		width:100%;
+		background:url("../img/act-logo-bg.png") no-repeat center;
+		background-size:auto 200%;
+		color:white;
+		p{
+			max-width:550px;
+		}
+		.row{
+			width:100%;
+			flex-direction: row;
+			.col-1-2{
+				width:50%;
+				padding:60px 60px;
+				&:first-child{
+					display:flex;
+					justify-content: flex-end;
+					padding-left:30px;
+				}
+			}
+		}
+	}
+}
+
+// ———————————————————————————————————
+// DRIVER STORIES
+// ——————————————————————————————————— 
+.driver-stories{
+	padding:120px 0;
+	background: linear-gradient(180deg, $blue 0%, $blue_light 150%);
+	--card_size:400px;
+	.card-slider_track{
+		gap:30px;
+	}
+	.card-slider .card{
+	  width:var(--card_size);
+	  height:var(--card_size);
+	  background:white;
+	  border-radius:10px;
+	  color:$blue;
+	  .card_image{
+	  	z-index:1;
+	    display:block;
+	    position:absolute;
+	    bottom:-40px;
+	    right:-10px;
+	    width:75%;
+	    height:auto;
+	    border-radius:10px;
+	    @include transform(scale(1) rotate(-8deg));
+	    @include transition(all 0.8s $easeOutExpo);
+	    will-change: transform;
+	    overflow:hidden;
+	     img{
+		  	display:block;
+		  	width:100%;
+		  	height:auto;
+		  }
+	  }
+	  &:hover{
+	  	background: linear-gradient(180deg, darken($blue, 2%) 0%, darken($blue_light, 16%) 150%);
+	  	.card_image{
+		    @include transform(translateX(10px) scale(0.85) rotate(-5deg));
+		  }
+		  .card-circle{
+			  @include transform(scale(1.5));
+			  @include opacity(1);
+			}
+	  }
+	}
+	.card-slider .card_text{
+	  z-index:2;
+	  position:absolute;
+	  top:0;
+	  left:0;
+	  width:100%;
+	  padding:50px;
+	  //color:white;
+	  h4{
+	    margin-bottom:5px;
+	  }
+	  h5{
+	    z-index:0;
+	    font-weight:700;
+	    font-size:17px;
+	    line-height:1;
+	    letter-spacing:-0.03em;
+	    text-transform:uppercase;
+	    color:$orange;
+	  }
+	}
+	.card_link{
+		z-index:2;
+		position:absolute;
+		bottom:50px;
+		left:50px;
+		.line-btn{
+			font-size:13px;
+		}
+	}
+}
+
+
+
+// ———————————————————————————————————
+// ACT PLAZA
+// ——————————————————————————————————— 
+.plaza{
+	position:relative;
+	padding:160px 0;
+	background:$blue_dark url("../img/blue-benefits.jpg") no-repeat left center;
+	background-size:auto 100%;
+	color:white;
+	--card_size:610px;
+	.plaza_wrap{
+		z-index:2;
+		position:relative;
+	}
+	.plaza_text{
+		padding-right:30px;
+		p{
+			max-width:450px;
+			color:rgba(255,255,255,0.8);
+		}
+	}
+	.plaza_text-inner{
+		padding:120px 0;
+	}
+	.plaza_slider{
+		z-index:2;
+		position:absolute;
+		left:50%;
+		width:50%;
+	}
+	.card-slider_scroll{
+		height:406px;
+	}
+	.card-slider_track{
+	  gap:0;
+	  padding-right:0;
+	}
+	.card-slider .card{
+	  width:var(--card_size);
+	  img{
+	    display:block;
+	    width:100%;
+	    height:auto;
+	  }
+	}
+	.plaza-map{
+		z-index:0;
+		position:absolute;
+		bottom:-120px;
+		left:5%;
+		width:1280px;
+		@media(min-width:1280px){
+			width:1280px;
+		}
+		@media(min-width:1920px){
+			width:1440px;
+		}
+		img{
+			display:block;
+			width:100%;
+			height:auto;
+			@include opacity(0.8);
+		}
+	}
+}
+
+
+// ———————————————————————————————————
+// BEST FLEETS
+// ——————————————————————————————————— 
+.best-fleets{
+	background:white url("../img/tire-tread-bg.png") no-repeat center top;
+	background-size:30%;
+	padding-top:120px;
+	//padding-bottom:30px;
+	img{
+		margin-bottom:-130px;
+		margin-top:60px;
+	}
+	p{
+		max-width:550px;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	
+}
+
+
+
+
+
+
+
+
+
+
